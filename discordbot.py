@@ -18,6 +18,10 @@ async def on_ready():
 @client.event
 async def on_message(message):
     reply = message.content
+    dicem = re.search("\d+", reply)
+    dicei = int(dicem.group())
+    ataim = re.search("d\d+", reply)
+    ataii = int(ataim.group()[1:])
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
         return
@@ -25,12 +29,12 @@ async def on_message(message):
     if reply == '/neko':
         await message.channel.send("にゃーん")
     #ダイスロール
-    if re.match("/[0-9]d[0-9]+", reply):
+    if re.match("/[0-9]+d[0-9]+", reply):
         data = []
         moji = "("
-        for i in range(int(reply[1])):
-            data.append(random.randrange(1,int(reply[3:])+1,1))
-            if i < int(reply[1])-1:
+        for i in range(dicei):
+            data.append(random.randrange(1,ataii+1,1))
+            if i < dicei-1:
                 moji += str(data[i]) + " + "
             else:
                 moji += str(data[i])
