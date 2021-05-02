@@ -29,17 +29,20 @@ async def on_message(message):
     if reply == '/neko':
         await message.channel.send("にゃーん")
     #ダイスロール
-    if re.match("/[0-9]+d[0-9]+", reply):
-        data = []
-        moji = "("
-        for i in range(dicei):
-            data.append(random.randrange(1,ataii+1,1))
-            if i < dicei-1:
-                moji += str(data[i]) + " + "
-            else:
-                moji += str(data[i])
-        moji += ")"
-        await message.channel.send(str(sum(data))+ " " +moji)
+    if dicei <= 1000:
+        if re.match("/[0-9]+d[0-9]+", reply):
+            data = []
+            moji = "("
+            for i in range(dicei):
+                data.append(random.randrange(1,ataii+1,1))
+                if i < dicei-1:
+                    moji += str(data[i]) + " + "
+                else:
+                    moji += str(data[i])
+            moji += ")"
+            await message.channel.send(str(sum(data))+ " " +moji)
+    else:
+        return
 
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
