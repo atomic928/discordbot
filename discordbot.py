@@ -29,7 +29,7 @@ async def on_message(message):
     if reply == '/neko':
         await message.channel.send("にゃーん")
     #ダイスロール
-    if dicei <= 1000:
+    if dicei <= 300:
         if re.match("/[0-9]+d[0-9]+", reply):
             data = []
             moji = "("
