@@ -29,7 +29,7 @@ async def on_message(message):
         data = []
         moji = "("
         for i in range(int(reply[1])):
-            data.append(random.randrange(1,int(reply[3:]),1))
+            data.append(random.randrange(1,int(reply[3:])+1,1))
             if i < int(reply[1])-1:
                 moji += str(data[i]) + " + "
             else:
