@@ -22,6 +22,7 @@ async def on_message(message):
     dicei = int(dicem.group())
     ataim = re.search("d\d+", reply)
     ataii = int(ataim.group()[1:])
+    dicea = re.findall("\d+d\d+", reply)
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
         return
@@ -29,20 +30,25 @@ async def on_message(message):
     if reply == '/neko':
         await message.channel.send("にゃーん")
     #ダイスロール
-    if dicei <= 300:
-        if re.match("/[0-9]+d[0-9]+", reply):
-            data = []
-            moji = "("
-            for i in range(dicei):
-                data.append(random.randrange(1,ataii+1,1))
-                if i < dicei-1:
-                    moji += str(data[i]) + " + "
-                else:
-                    moji += str(data[i])
-            moji += ")"
-            await message.channel.send(str(sum(data))+ " " +moji)
-    else:
-        return
-
+    for i in dicea:
+        dicem = re.search("\d+", i)
+        dicei = int(dicem.group())
+        ataim = re.search("d\d+", i)
+        ataii = int(ataim.group()[1:])
+        if dicei < 300:
+            if re.match("/(\d+d\d+\+)*\d+d\d+", reply):
+                data = []
+                moji = "("
+                for i in range(dicei):
+                    data.append(random.randrange(1,ataii+1,1))
+                    if i < dicei-1:
+                        moji += str(data[i]) + " + "
+                    else:
+                        moji += str(data[i])
+                moji += ")"
+                await message.channel.send(str(sum(data))+ " " +moji)
+        else:
+            return
+        
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
