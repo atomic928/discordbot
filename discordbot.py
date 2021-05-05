@@ -34,20 +34,19 @@ async def on_message(message):
     data = []
     moji = "("
     if len(dicea) <= 10:
-        for i in dicea: #複数の振り方に対応
-            dicem = re.search("\d+", i)
+        for ndn in dicea: #複数の振り方に対応
+            dicem = re.search("\d+", ndn)
             dicei = int(dicem.group())
-            ataim = re.search("d\d+", i)
+            ataim = re.search("d\d+", ndn)
             ataii = int(ataim.group()[1:])
             if dicei < 300:
                 if re.match("/(\d+d\d+\+)*\d+d\d+", reply):
-
-                    for i in range(dicei):
+                    for first in range(dicei):
                         data.append(random.randrange(1,ataii+1,1))
-                        if i < dicei-1:
-                            moji += str(data[i]) + " + "
+                        if first < dicei-1 or ndn != dicea[-1]:
+                            moji += str(data[first]) + " + "
                         else:
-                            moji += str(data[i])
+                            moji += str(data[first])
             else:
                 return
     moji += ")"
