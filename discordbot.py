@@ -52,7 +52,6 @@ async def on_message(message):
                 else:
                     await message.channel.send("失敗")
             else:
-                await message.channel.send("<")
                 if sum(data) <= int(re.search("< \d+", reply).group()[2:]):
                     await message.channel.send("成功")
                 else:
