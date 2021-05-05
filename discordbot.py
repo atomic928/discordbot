@@ -38,6 +38,7 @@ async def on_message(message):
 
 
     if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply):
+        await message.channel.send("1")
         hanntei = ""
         flag = True
         if len(dicea) <= 10:
@@ -49,7 +50,6 @@ async def on_message(message):
                 if dicei < 300:
                     for first in range(dicei):
                         data.append(random.randrange(1,ataii+1,1))
-        await message.channel.send(sum(data))
         if shounari > 0:
             if iko > 0:
                 if sum(data) <= int(re.search("<= \d+", reply).group()[3:]):
@@ -78,6 +78,7 @@ async def on_message(message):
             else:
                 await message.channel.send("失敗")
     else:
+        await message.channel.send("2")                                       
         if re.match("/(\d+d\d+\+)*\d+d\d+", reply):
             flag = True
             if len(dicea) <= 10:
