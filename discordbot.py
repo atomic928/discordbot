@@ -34,9 +34,9 @@ async def on_message(message):
     flag = False
     
     if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply):
-        flag = True
+        await message.channel.send("にゃーん")
         hanntei = ""
-        if len(dice) <= 10:
+        if len(dicea) <= 10:
             for ndn in dicea:
                 dicem = re.search("\d+", ndn)
                 dicei = int(dicem.group())
