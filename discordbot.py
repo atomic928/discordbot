@@ -18,7 +18,6 @@ async def on_ready():
 @client.event
 async def on_message(message):
     reply = message.content
-    dicea = re.findall("\d+d\d+", reply)
     # メッセージ送信者がBotだった場合は無視する
     if message.author.bot:
         return
@@ -26,13 +25,54 @@ async def on_message(message):
     if reply == '/neko':
         await message.channel.send("にゃーん")
     #ダイスロール
-    
+    dicea = re.findall("\d+d\d+", reply)
     data = []
     moji = "("
     shounari = reply.find("<")
     dainari = reply.find(">")
     iko = reply.find("=")
     flag = False
+    
+    if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply):
+        flag = True
+        hanntei = ""
+        if len(dice) <= 10:
+            for ndn in dicea:
+                dicem = re.search("\d+", ndn)
+                dicei = int(dicem.group())
+                ataim = re.search("d\d+", ndn)
+                ataii = int(ataim.group()[1:])
+                if dicei < 300:
+                    for first in range(dicei):
+                        data.append(random.randrange(1, ataii+1, 1))
+            await message.channel.send(str(sum(data)))
+        if shounari > 0:
+            if iko > 0:
+                if sum(data) <= int(re.search("<= \d+", reply).group()[3:]):
+                    await message.channel.send("成功")
+                else:
+                    await message.channel.send("失敗")
+            else:
+                if sum(data) <= int(re.search("< \d+", reply).group()[2:]):
+                    await message.channel.send("成功")
+                else:
+                    await message.channel.send("失敗")
+        elif dainari > 0:
+            if iko > 0:
+                if sum(data) <= int(re.search(">= \d+", reply).group()[3:]):
+                    await message.channel.send("成功")
+                else:
+                    await message.channel.send("失敗")
+            else:
+                if sum(data) <= int(re.search("> \d+", reply).group()[2:]):
+                    await message.channel.send("成功")
+                else:
+                    await message.channel.send("失敗")
+        else:
+            if sum(data) == int(re.search("= \d+", reply).group()[2:]):
+                await message.channel.send("成功")
+            else:
+                await message.channel.send("失敗")
     
     if re.fullmatch("/(\d+d\d+\+)*\d+d\d+", reply):
         flag = True
