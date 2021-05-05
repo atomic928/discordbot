@@ -18,11 +18,7 @@ async def on_ready():
 @client.event
 async def on_message(message):
     reply = message.content
-    dicem = re.search("\d+", reply)
-    dicei = int(dicem.group())
-    ataim = re.search("d\d+", reply)
-    ataii = int(ataim.group()[1:])
-    dicea = re.findall("\d+d\d+", reply)
+    
     # メッセージ送信者がBotだった 場合は無視する
     if message.author.bot:
         return
@@ -32,6 +28,7 @@ async def on_message(message):
     #ダイスロール
     
     data = []
+    dicea = re.findall("\d+d\d+", reply)
     moji = "("
     shounari = reply.find("<")
     dainari = reply.find(">")
@@ -39,7 +36,6 @@ async def on_message(message):
     flag = False
 
 
-    dicea = re.findall("\d+d\d+", reply)
 
     if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply):
         hanntei = ""
@@ -53,7 +49,7 @@ async def on_message(message):
                 if dicei < 300:
                     for first in range(dicei):
                         data.append(random.randrange(1,ataii+1,1))
-        print(sum(data))
+        await message.channel.send(sum(data))
         if shounari > 0:
             if iko > 0:
                 if sum(data) <= int(re.search("<= \d+", reply).group()[3:]):
