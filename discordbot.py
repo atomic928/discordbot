@@ -29,8 +29,10 @@ async def on_message(message):
     
     data = []
     moji = "("
+    flag = False
     
     if re.fullmatch("/(\d+d\d+\+)*\d+d\d+", reply):
+        flag = True
         if len(dicea) <= 10:
             for ndn in dicea:#複数の振り方に対応
                 dicem = re.search("\d+", ndn)
@@ -47,7 +49,8 @@ async def on_message(message):
         else:
             moji += str(data[i])
     moji += ")"
-    await message.channel.send(str(sum(data))+ " " +moji)
+    if flag:
+        await message.channel.send(str(sum(data))+ " " +moji)
         
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
