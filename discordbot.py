@@ -30,25 +30,28 @@ async def on_message(message):
     if reply == '/neko':
         await message.channel.send("にゃーん")
     #ダイスロール
-    for i in dicea:
-        dicem = re.search("\d+", i)
-        dicei = int(dicem.group())
-        ataim = re.search("d\d+", i)
-        ataii = int(ataim.group()[1:])
-        if dicei < 300:
-            if re.match("/(\d+d\d+\+)*\d+d\d+", reply):
-                data = []
-                moji = "("
-                for i in range(dicei):
-                    data.append(random.randrange(1,ataii+1,1))
-                    if i < dicei-1:
-                        moji += str(data[i]) + " + "
-                    else:
-                        moji += str(data[i])
-                moji += ")"
-                await message.channel.send(str(sum(data))+ " " +moji)
-        else:
-            return
+    
+    data = []
+    moji = "("
+    if len(dicea) <= 10:
+        for i in dicea: #複数の振り方に対応
+            dicem = re.search("\d+", i)
+            dicei = int(dicem.group())
+            ataim = re.search("d\d+", i)
+            ataii = int(ataim.group()[1:])
+            if dicei < 300:
+                if re.match("/(\d+d\d+\+)*\d+d\d+", reply):
+
+                    for i in range(dicei):
+                        data.append(random.randrange(1,ataii+1,1))
+                        if i < dicei-1:
+                            moji += str(data[i]) + " + "
+                        else:
+                            moji += str(data[i])
+            else:
+                return
+    moji += ")"
+    await message.channel.send(str(sum(data))+ " " +moji)
         
 # Botの起動とDiscordサーバーへの接続
 client.run(TOKEN)
