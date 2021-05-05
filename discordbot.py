@@ -34,7 +34,6 @@ async def on_message(message):
     flag = False
     
     if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply):
-        await message.channel.send("にゃーん")
         hanntei = ""
         if len(dicea) <= 10:
             for ndn in dicea:
@@ -53,18 +52,19 @@ async def on_message(message):
                 else:
                     await message.channel.send("失敗")
             else:
+                await message.channel.send("<")
                 if sum(data) <= int(re.search("< \d+", reply).group()[2:]):
                     await message.channel.send("成功")
                 else:
                     await message.channel.send("失敗")
         elif dainari > 0:
             if iko > 0:
-                if sum(data) <= int(re.search(">= \d+", reply).group()[3:]):
+                if sum(data) >= int(re.search(">= \d+", reply).group()[3:]):
                     await message.channel.send("成功")
                 else:
                     await message.channel.send("失敗")
             else:
-                if sum(data) <= int(re.search("> \d+", reply).group()[2:]):
+                if sum(data) > int(re.search("> \d+", reply).group()[2:]):
                     await message.channel.send("成功")
                 else:
                     await message.channel.send("失敗")
