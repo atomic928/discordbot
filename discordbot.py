@@ -29,6 +29,9 @@ async def on_message(message):
     
     data = []
     moji = "("
+    shounari = reply.find("<")
+    dainari = reply.find(">")
+    iko = reply.find("=")
     flag = False
     
     if re.fullmatch("/(\d+d\d+\+)*\d+d\d+", reply):
