@@ -31,9 +31,10 @@ async def on_message(message):
     shounari = reply.find("<")
     dainari = reply.find(">")
     iko = reply.find("=")
+    hitei = reply.find("!")
     flag = False
     
-    if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply):
+    if re.match("/(\d+d\d+\+)*\d+d\d+ [<,=,>] \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ <= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ >= \d+", reply) or re.match("/(\d+d\d+\+)*\d+d\d+ != \d+", reply):
         hanntei = ""
         if len(dicea) <= 10:
             for ndn in dicea:
@@ -67,6 +68,11 @@ async def on_message(message):
                     await message.channel.send("成功")
                 else:
                     await message.channel.send("失敗")
+        elif hitei > 0:
+            if sum(data) != int(re.search("!= \d+", reply).group()[3:]):
+                await message.channel.send("成功")
+            else:
+                await message.channel.send("失敗")     
         else:
             if sum(data) == int(re.search("= \d+", reply).group()[2:]):
                 await message.channel.send("成功")
