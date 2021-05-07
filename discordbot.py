@@ -2,7 +2,6 @@ import discord
 import re
 import random
 
-print("Hello World")
 
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = 'ODM4MDYzNDA3MjQzNTkxNjgx.YI1pXg.I-LC49DBHDkhB8zycTnt3vU-e_4'
