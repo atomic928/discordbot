@@ -3,8 +3,8 @@ import re
 import random
 
 
-# 自分のBotのアクセストークンに置き換えてください
-TOKEN = 'ODM4MDYzNDA3MjQzNTkxNjgx.YI1pXg.I-LC49DBHDkhB8zycTnt3vU-e_4'
+# 本来はTOKENが書かれています、TOKENは公開できないのでこのようになっています
+TOKEN = 
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
